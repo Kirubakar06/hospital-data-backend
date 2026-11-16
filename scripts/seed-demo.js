@@ -53,6 +53,11 @@ const modules = [
     { name: 'Taylor Morgan', role: 'Nurse', department: 'Cardiology', phone: '+1-555-0181', email: 'taylor.morgan@example.test', shift: 'Day', status: 'Active' },
     { name: 'Casey Rivers', role: 'Lab Technician', department: 'Laboratory', phone: '+1-555-0182', email: 'casey.rivers@example.test', shift: 'Evening', status: 'Active' },
   ]],
+  ['reports', 'RP', [
+    { name: 'Monthly patient activity', category: 'Operations', period: 'Current month', generated: dateIn(0), owner: 'CarePoint Admin', status: 'Ready' },
+    { name: 'Revenue and payments summary', category: 'Financial', period: 'Current month', generated: dateIn(0), owner: 'CarePoint Admin', status: 'Ready' },
+    { name: 'Appointment activity summary', category: 'Operations', period: 'Next 7 days', generated: dateIn(0), owner: 'CarePoint Admin', status: 'Ready' },
+  ]],
   ['settings', 'SET', [
     { setting: 'Hospital name', value: 'CarePoint Demo Hospital', category: 'General', updated: dateIn(0) },
     { setting: 'Timezone', value: 'UTC', category: 'Regional', updated: dateIn(0) },

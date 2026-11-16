@@ -1,5 +1,5 @@
 import { AppError } from '../utils/errors.js';
-import { hasPermission } from '../../../shared/permissions.js';
+import { hasPermission } from '../../shared/permissions.js';
 
 export function authorize(module, action) {
   return (req, res, next) => {

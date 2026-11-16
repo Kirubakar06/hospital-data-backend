@@ -70,7 +70,8 @@ app.get('/api/v1/uploads/:filename', authenticate, authorize('medicalRecords', '
   return res.sendFile(filePath, { headers: { 'Content-Disposition': 'inline' } });
 }));
 app.use('/api/v1', recordRoutes);
-const frontendDist = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..', '..', 'dist');
+const frontendDist = path.resolve(process.env.FRONTEND_DIST_DIR
+  || path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..', '..', 'hospital management sample', 'dist'));
 if (existsSync(frontendDist)) {
   app.use(express.static(frontendDist));
   app.get('*', (req, res, next) => {

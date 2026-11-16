@@ -3,7 +3,7 @@ import { pool } from '../config/db.js';
 import { authenticate } from '../middleware/authMiddleware.js';
 import { authorize } from '../middleware/roleMiddleware.js';
 import { asyncHandler, sendSuccess } from '../utils/errors.js';
-import { hasPermission } from '../../../shared/permissions.js';
+import { hasPermission } from '../../shared/permissions.js';
 
 const router = Router();
 router.use(authenticate, authorize('dashboard', 'read'));

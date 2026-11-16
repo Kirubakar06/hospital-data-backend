@@ -1,5 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
+import { existsSync } from 'node:fs';
+import { fileURLToPath } from 'node:url';
 import request from 'supertest';
 
 process.env.DB_HOST = '127.0.0.1';
@@ -41,7 +43,9 @@ test('public registration validates email and password before database access', 
   assert.equal(response.body.message, 'Validation failed.');
 });
 
-test('production server serves the frontend application entry point', async () => {
+test('production server serves the frontend application entry point', {
+  skip: !existsSync(fileURLToPath(new URL('../../hospital%20management%20sample/dist/index.html', import.meta.url))),
+}, async () => {
   const response = await request(app).get('/patients');
   assert.equal(response.status, 200);
   assert.match(response.headers['content-type'], /text\/html/);

@@ -1,6 +1,6 @@
 # CarePoint backend
 
-This folder contains the Express API and MySQL setup for the React/Vite app in the parent folder. It replaces the frontend's former browser-storage demo adapter with authenticated API requests.
+This folder contains the Express API and MySQL setup for the React/Vite app in the sibling `hospital management sample` folder. It replaces the frontend's former browser-storage demo adapter with authenticated API requests.
 
 ## Requirements and setup
 
@@ -8,11 +8,11 @@ This folder contains the Express API and MySQL setup for the React/Vite app in t
 - MySQL 8+
 
 1. Copy `.env.example` to `.env`. Set different random secrets for `JWT_SECRET` and `JWT_REFRESH_SECRET` (at least 32 characters each), and enter your local MySQL administrator password in `DB_SETUP_PASSWORD`.
-2. From the project root, run `npm install` once; npm workspaces installs frontend and backend dependencies together.
+2. Run `npm install` in this folder and in the frontend's `hospital management sample` folder to install their dependencies.
 3. From the project root run `npm run db:setup`. It installs the schema and creates `DB_USER` with the limited runtime grants.
 4. Run `npm run seed:admin` and `npm run seed:demo` to create the initial admin and synthetic records.
-5. From the project root, run `npm run dev` to start the API and frontend together. The API listens on `http://localhost:5000`, checks MySQL before listening, and Vite runs on `http://localhost:5173`, proxying `/api` requests to the API. Override the proxy target with `VITE_BACKEND_URL` if needed.
-6. For a single-origin production run, build at the project root with `npm run build`, then run `npm start`; Express serves the frontend build and API together on port 5000.
+5. From the frontend's `hospital management sample` folder, run `npm run dev` to start the API and frontend together. The API listens on `http://localhost:5000`, checks MySQL before listening, and Vite runs on `http://localhost:5173`, proxying `/api` requests to the API. Override the proxy target with `VITE_BACKEND_URL` if needed.
+6. For a single-origin production run, build from the frontend folder with `npm run build`, then run `npm start` from that folder; Express serves the frontend build and API together on port 5000. Set `FRONTEND_DIST_DIR` if the frontend build is in a different location.
 
 Run only one API instance per port. If the CarePoint API is already running on port 5000, starting the backend again reports that it is already running and exits cleanly. Stop the existing app process before restarting it.
 
@@ -31,7 +31,7 @@ All API routes are under `/api/v1`.
 
 List routes return `{ success, message, data: { records, total, limit, offset } }`. Writes return the affected record. Errors use a consistent JSON envelope and do not expose SQL or stack traces.
 
-RBAC is enforced in API middleware. The role matrix is shared between the API and frontend in `../shared/permissions.js`; the frontend uses it to hide inaccessible pages and actions, while the API remains authoritative. Update it and add authorization tests before introducing new roles or permissions.
+RBAC is enforced in API middleware using the role matrix in `shared/permissions.js`. The frontend maintains its own shared role matrix; keep both matrices aligned when introducing new roles or permissions. The API remains authoritative.
 
 Self-registration accepts any valid email, but creates an inactive Receptionist account. A Super Admin/Admin must activate it from Users before it can sign in; the login does not ignore or bypass email/account identity. Email ownership is not verified because no mail provider is configured.
 
